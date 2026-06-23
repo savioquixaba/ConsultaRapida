@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Copy, Check } from "lucide-react"
+import { Copy, Check, XCircle, Fingerprint, UserCheck } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card"
 
 type ResultadoData = {
@@ -32,10 +32,10 @@ function CopyButton({ value }: { value: string }) {
   return (
     <button
       onClick={handleCopy}
-      className="ml-2 text-muted-foreground hover:text-foreground transition-colors shrink-0"
+      className="p-1.5 rounded-md text-muted-foreground hover:text-foreground hover:bg-accent transition-all shrink-0"
       title="Copiar"
     >
-      {copied ? <Check size={16} className="text-green-500" /> : <Copy size={16} />}
+      {copied ? <Check size={15} className="text-green-400" /> : <Copy size={15} />}
     </button>
   )
 }
@@ -43,16 +43,17 @@ function CopyButton({ value }: { value: string }) {
 type FieldProps = {
   label: string
   value: string
+  highlight?: boolean
 }
 
-function FieldRow({ label, value }: FieldProps) {
+function FieldRow({ label, value, highlight }: FieldProps) {
   return (
-    <div className="border-b pb-3 last:border-0">
-      <span className="text-xs text-muted-foreground uppercase tracking-wide">{label}</span>
-      <div className="flex items-start gap-2 mt-1">
-        <span className="font-medium break-all leading-relaxed flex-1 min-w-0">{value}</span>
+    <div className="flex items-center justify-between gap-3 py-2.5 px-3 rounded-lg even:bg-secondary/50">
+      <span className="text-sm text-muted-foreground">{label}</span>
+      <span className={`text-sm font-medium flex items-center gap-1 ${highlight ? "text-primary" : ""}`}>
+        {value}
         <CopyButton value={value} />
-      </div>
+      </span>
     </div>
   )
 }
@@ -60,12 +61,15 @@ function FieldRow({ label, value }: FieldProps) {
 export default function ResultadoCard({ data, erro }: ResultadoCardProps) {
   if (erro) {
     return (
-      <Card className="border-destructive">
+      <Card className="border-destructive/30 bg-destructive/5">
         <CardHeader>
-          <CardTitle>Erro</CardTitle>
+          <div className="flex items-center gap-2">
+            <XCircle size={20} className="text-destructive" />
+            <CardTitle>Erro</CardTitle>
+          </div>
         </CardHeader>
         <CardContent>
-          <p className="text-destructive whitespace-pre-wrap break-all">{erro}</p>
+          <p className="text-sm text-destructive/90">{erro}</p>
         </CardContent>
       </Card>
     )
@@ -74,17 +78,31 @@ export default function ResultadoCard({ data, erro }: ResultadoCardProps) {
   if (!data) return null
 
   return (
-    <Card>
+    <Card className="animate-in fade-in duration-300">
       <CardHeader>
-        <CardTitle>Resultado da Consulta</CardTitle>
+        <CardTitle className="text-lg">Resultado da Consulta</CardTitle>
       </CardHeader>
-      <CardContent className="space-y-2">
+      <CardContent className="space-y-1">
         <FieldRow label="Protocolo" value={data.protocolo} />
         <FieldRow label="CPF" value={data.nrCpf} />
-        <FieldRow label="Pendência RFB" value={data.pendenciaRFB ? "Sim" : "Não"} />
+
+        <div className="border-t border-border my-2" />
+
+        <FieldRow
+          label="Pendência RFB"
+          value={data.pendenciaRFB ? "Sim" : "Não"}
+          highlight={data.pendenciaRFB}
+        />
         <FieldRow label="Descrição Pendência" value={data.descricaoPendencia ?? "—"} />
-        <FieldRow label="Ind. Consulta Biográfica" value={String(data.indConsBiografica)} />
-        <FieldRow label="Ind. Consulta Biométrica" value={String(data.indConsBiometrica)} />
+
+        <div className="border-t border-border my-2" />
+
+        <div className="flex items-center gap-2 py-2">
+          <Fingerprint size={16} className="text-muted-foreground" />
+          <span className="text-xs text-muted-foreground uppercase tracking-wide">Indicadores</span>
+        </div>
+        <FieldRow label="Consulta Biográfica" value={String(data.indConsBiografica)} />
+        <FieldRow label="Consulta Biométrica" value={String(data.indConsBiometrica)} />
       </CardContent>
     </Card>
   )

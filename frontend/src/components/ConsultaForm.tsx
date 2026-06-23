@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { Search, Loader2 } from "lucide-react"
 import { Button } from "./ui/button"
 import { Input } from "./ui/input"
 
@@ -25,8 +26,12 @@ export default function ConsultaForm({ onConsultar, loading }: ConsultaFormProps
         onChange={(e) => setProtocolo(e.target.value)}
         disabled={loading}
       />
-      <Button type="submit" disabled={loading || !protocolo.trim()}>
-        {loading ? "Consultando..." : "Consultar"}
+      <Button type="submit" disabled={loading || !protocolo.trim()} size="lg">
+        {loading ? (
+          <Loader2 size={18} className="animate-spin" />
+        ) : (
+          <Search size={18} />
+        )}
       </Button>
     </form>
   )
