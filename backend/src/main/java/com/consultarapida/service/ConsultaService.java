@@ -42,9 +42,14 @@ public class ConsultaService {
         try {
             Api2Request api2Request = new Api2Request(cpfUsuario, cpf);
             Api2Response api2Response = api2Client.consultar(api2Request);
-            if (api2Response != null) {
-                indConsBiografica = api2Response.getIndConsBiografica();
-                indConsBiometrica = api2Response.getIndConsBiometrica();
+            if (api2Response != null
+                    && api2Response.getRetornoConsultada() != null
+                    && !api2Response.getRetornoConsultada().isEmpty()
+                    && api2Response.getRetornoConsultada().get(0).getListaCin() != null
+                    && !api2Response.getRetornoConsultada().get(0).getListaCin().isEmpty()) {
+                var cinItem = api2Response.getRetornoConsultada().get(0).getListaCin().get(0);
+                indConsBiografica = cinItem.getIndConsBiografica();
+                indConsBiometrica = cinItem.getIndConsBiometrica();
             }
         } catch (Exception e) {
             log.warn("API 2 indisponível para o CPF {}: {}", cpf, e.getMessage());
