@@ -32,16 +32,27 @@ public class ConsultaService {
 
         String cpf = api1Response.getNrCpf();
 
-        Api2Request api2Request = new Api2Request(cpfUsuario, cpf);
-        Api2Response api2Response = api2Client.consultar(api2Request);
+        int indConsBiografica = 0;
+        int indConsBiometrica = 0;
+
+        try {
+            Api2Request api2Request = new Api2Request(cpfUsuario, cpf);
+            Api2Response api2Response = api2Client.consultar(api2Request);
+            if (api2Response != null) {
+                indConsBiografica = api2Response.getIndConsBiografica();
+                indConsBiometrica = api2Response.getIndConsBiometrica();
+            }
+        } catch (Exception e) {
+            // API 2 indisponível — retorna apenas dados da API 1
+        }
 
         return new ConsultaResponse(
                 protocolo,
                 cpf,
                 api1Response.isPendenciaRFB(),
                 api1Response.getDescricaoPendencia(),
-                api2Response.getIndConsBiografica(),
-                api2Response.getIndConsBiometrica()
+                indConsBiografica,
+                indConsBiometrica
         );
     }
 }
