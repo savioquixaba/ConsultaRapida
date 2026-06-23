@@ -60,8 +60,29 @@ export default function App() {
           {loading ? <SkeletonCard /> : <ResultadoCard data={data} erro={erro} />}
         </div>
 
-        <footer className="fixed bottom-0 w-full text-center py-4 text-xs text-muted-foreground bg-background/50 backdrop-blur-sm border-t border-border">
-          Feito por <span className="font-medium">Sávio Quixaba</span>
+        <footer className="fixed bottom-0 w-full text-center py-3 text-xs text-muted-foreground bg-background/50 backdrop-blur-sm border-t border-border">
+          <div className="flex items-center justify-center gap-4">
+            <span>
+              Desenvolvido por{" "}
+              <a
+                href="https://github.com/savioquixaba"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-medium text-foreground hover:text-primary transition-colors"
+              >
+                Sávio Quixaba
+              </a>
+            </span>
+            <span className="text-border">|</span>
+            <a
+              href="https://github.com/savioquixaba"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-primary transition-colors"
+            >
+              GitHub
+            </a>
+          </div>
         </footer>
       </div>
     </>
