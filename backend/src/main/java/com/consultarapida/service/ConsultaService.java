@@ -6,11 +6,15 @@ import com.consultarapida.dto.Api1Response;
 import com.consultarapida.dto.Api2Request;
 import com.consultarapida.dto.Api2Response;
 import com.consultarapida.dto.ConsultaResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ConsultaService {
+
+    private static final Logger log = LoggerFactory.getLogger(ConsultaService.class);
 
     private final Api1Client api1Client;
     private final Api2Client api2Client;
@@ -43,7 +47,7 @@ public class ConsultaService {
                 indConsBiometrica = api2Response.getIndConsBiometrica();
             }
         } catch (Exception e) {
-            // API 2 indisponível — retorna apenas dados da API 1
+            log.warn("API 2 indisponível para o CPF {}: {}", cpf, e.getMessage());
         }
 
         return new ConsultaResponse(

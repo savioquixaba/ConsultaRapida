@@ -7,7 +7,7 @@ api:
     username: ${API1_USERNAME}
     password: ${API1_PASSWORD}
   consulta2:
-    url: ${API2_URL}
+    base-url: ${API2_URL}
     username: ${API2_USERNAME}
     password: ${API2_PASSWORD}
     cpf-usuario: ${API2_CPF_USUARIO}
