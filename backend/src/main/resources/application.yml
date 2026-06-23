@@ -3,6 +3,14 @@ server:
 
 api:
   consulta:
-    url: ${API1_URL}
+    base-url: ${API1_URL}
     username: ${API1_USERNAME}
     password: ${API1_PASSWORD}
+
+spring:
+  cloud:
+    openfeign:
+      okhttp:
+        enabled: false
+      httpclient:
+        enabled: true

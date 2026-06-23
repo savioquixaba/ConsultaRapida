@@ -1,30 +1,21 @@
 package com.consultarapida.service;
 
+import com.consultarapida.client.Api1Client;
 import com.consultarapida.dto.Api1Response;
 import com.consultarapida.dto.ConsultaResponse;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.client.WebClient;
-import org.springframework.web.reactive.function.client.WebClientResponseException;
 
 @Service
 public class ConsultaService {
 
-    private final WebClient webClient;
-    private final String apiUrl;
+    private final Api1Client api1Client;
 
-    public ConsultaService(WebClient consultaWebClient,
-                           @Value("${api.consulta.url}") String apiUrl) {
-        this.webClient = consultaWebClient;
-        this.apiUrl = apiUrl;
+    public ConsultaService(Api1Client api1Client) {
+        this.api1Client = api1Client;
     }
 
     public ConsultaResponse consultar(String protocolo) {
-        Api1Response api1Response = webClient.get()
-                .uri(apiUrl + "?NumeroProtocolo={protocolo}", protocolo)
-                .retrieve()
-                .bodyToMono(Api1Response.class)
-                .block();
+        Api1Response api1Response = api1Client.consultar(protocolo);
 
         if (api1Response == null) {
             throw new RuntimeException("Resposta vazia da API externa para o protocolo: " + protocolo);
