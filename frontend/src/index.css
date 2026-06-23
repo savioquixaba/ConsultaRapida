@@ -1,33 +1,71 @@
 @import "tailwindcss";
 
 @theme {
-  --color-background: hsl(224 71% 4%);
-  --color-foreground: hsl(213 31% 91%);
-  --color-primary: hsl(210 100% 50%);
-  --color-primary-foreground: hsl(0 0% 100%);
-  --color-secondary: hsl(215 25% 12%);
-  --color-secondary-foreground: hsl(210 40% 90%);
-  --color-muted: hsl(215 25% 12%);
-  --color-muted-foreground: hsl(215 20% 65%);
-  --color-accent: hsl(215 25% 16%);
-  --color-accent-foreground: hsl(210 40% 90%);
-  --color-destructive: hsl(0 80% 50%);
-  --color-destructive-foreground: hsl(0 0% 100%);
-  --color-border: hsl(215 25% 20%);
-  --color-input: hsl(215 25% 16%);
-  --color-ring: hsl(210 100% 50%);
   --radius: 0.75rem;
+  --color-background: var(--bg);
+  --color-foreground: var(--fg);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-fg);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-fg);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-fg);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-fg);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-fg);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+}
+
+:root {
+  --bg: hsl(224 71% 4%);
+  --fg: hsl(213 31% 91%);
+  --primary: hsl(210 100% 50%);
+  --primary-fg: hsl(0 0% 100%);
+  --secondary: hsl(215 25% 12%);
+  --secondary-fg: hsl(210 40% 90%);
+  --muted: hsl(215 25% 12%);
+  --muted-fg: hsl(215 20% 65%);
+  --accent: hsl(215 25% 16%);
+  --accent-fg: hsl(210 40% 90%);
+  --destructive: hsl(0 80% 50%);
+  --destructive-fg: hsl(0 0% 100%);
+  --border: hsl(215 25% 20%);
+  --input: hsl(215 25% 16%);
+  --ring: hsl(210 100% 50%);
+  --bg-gradient: hsl(215 50% 12%);
+}
+
+.light {
+  --bg: hsl(0 0% 100%);
+  --fg: hsl(222.2 84% 4.9%);
+  --primary: hsl(210 100% 40%);
+  --primary-fg: hsl(0 0% 100%);
+  --secondary: hsl(210 40% 96%);
+  --secondary-fg: hsl(222.2 47.4% 11.2%);
+  --muted: hsl(210 40% 96%);
+  --muted-fg: hsl(215.4 16.3% 46.9%);
+  --accent: hsl(210 40% 90%);
+  --accent-fg: hsl(222.2 47.4% 11.2%);
+  --destructive: hsl(0 84.2% 60.2%);
+  --destructive-fg: hsl(0 0% 100%);
+  --border: hsl(214.3 31.8% 91.4%);
+  --input: hsl(214.3 31.8% 91.4%);
+  --ring: hsl(222.2 84% 4.9%);
+  --bg-gradient: hsl(210 40% 90%);
 }
 
 * {
-  border-color: var(--color-border);
+  border-color: var(--border);
 }
 
 body {
-  background-color: var(--color-background);
-  color: var(--color-foreground);
+  background-color: var(--bg);
+  color: var(--fg);
   font-family: system-ui, -apple-system, sans-serif;
-  background-image: radial-gradient(ellipse at top, hsl(215 50% 12%), hsl(224 71% 4%));
+  background-image: radial-gradient(ellipse at top, var(--bg-gradient), var(--bg));
   background-attachment: fixed;
 }
 

@@ -2,6 +2,7 @@ import { useState } from "react"
 import { Search } from "lucide-react"
 import ConsultaForm from "./components/ConsultaForm"
 import ResultadoCard from "./components/ResultadoCard"
+import ThemeToggle from "./components/ThemeToggle"
 
 type ResultadoData = {
   protocolo: string
@@ -40,21 +41,28 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col items-center p-4 pt-12 md:pt-24">
-      <div className="w-full max-w-lg space-y-8">
-        <div className="text-center space-y-2">
-          <div className="inline-flex items-center justify-center size-12 rounded-xl bg-primary/10 mb-2">
-            <Search size={24} className="text-primary" />
+    <>
+      <ThemeToggle />
+      <div className="min-h-screen flex flex-col items-center p-4 pt-12 md:pt-24">
+        <div className="w-full max-w-lg space-y-8 pb-16">
+          <div className="text-center space-y-2">
+            <div className="inline-flex items-center justify-center size-12 rounded-xl bg-primary/10 mb-2">
+              <Search size={24} className="text-primary" />
+            </div>
+            <h1 className="text-3xl font-bold tracking-tight">ConsultaRapida</h1>
+            <p className="text-sm text-muted-foreground">
+              Consulte protocolos e obtenha dados consolidados
+            </p>
           </div>
-          <h1 className="text-3xl font-bold tracking-tight">ConsultaRapida</h1>
-          <p className="text-sm text-muted-foreground">
-            Consulte protocolos e obtenha dados consolidados
-          </p>
+
+          <ConsultaForm onConsultar={handleConsultar} loading={loading} />
+          <ResultadoCard data={data} erro={erro} />
         </div>
 
-        <ConsultaForm onConsultar={handleConsultar} loading={loading} />
-        <ResultadoCard data={data} erro={erro} />
+        <footer className="fixed bottom-0 w-full text-center py-4 text-xs text-muted-foreground bg-background/50 backdrop-blur-sm border-t border-border">
+          Feito por <span className="font-medium">Sávio Quixaba</span>
+        </footer>
       </div>
-    </div>
+    </>
   )
 }
