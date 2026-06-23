@@ -1,6 +1,6 @@
-import { useState } from "react"
-import { Copy, Check, XCircle, Fingerprint, UserCheck } from "lucide-react"
+import { XCircle, Fingerprint, FileSearch } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card"
+import CopyButton from "./CopyButton"
 
 type ResultadoData = {
   protocolo: string
@@ -14,30 +14,6 @@ type ResultadoData = {
 type ResultadoCardProps = {
   data: ResultadoData | null
   erro: string | null
-}
-
-function CopyButton({ value }: { value: string }) {
-  const [copied, setCopied] = useState(false)
-
-  async function handleCopy() {
-    try {
-      await navigator.clipboard.writeText(value)
-      setCopied(true)
-      setTimeout(() => setCopied(false), 1500)
-    } catch {
-      // clipboard not available
-    }
-  }
-
-  return (
-    <button
-      onClick={handleCopy}
-      className="p-1.5 rounded-md text-muted-foreground hover:text-foreground hover:bg-accent transition-all shrink-0"
-      title="Copiar"
-    >
-      {copied ? <Check size={15} className="text-green-400" /> : <Copy size={15} />}
-    </button>
-  )
 }
 
 type FieldProps = {
@@ -54,6 +30,16 @@ function FieldRow({ label, value, highlight }: FieldProps) {
         {value}
         <CopyButton value={value} />
       </span>
+    </div>
+  )
+}
+
+function IndicatorBadge({ label, value }: { label: string; value: number }) {
+  const color = value > 0 ? "text-green-400" : "text-muted-foreground"
+  return (
+    <div className="flex items-center justify-between px-3 py-2 rounded-lg bg-secondary/30">
+      <span className="text-xs text-muted-foreground">{label}</span>
+      <span className={`text-lg font-bold tabular-nums ${color}`}>{value}</span>
     </div>
   )
 }
@@ -75,10 +61,21 @@ export default function ResultadoCard({ data, erro }: ResultadoCardProps) {
     )
   }
 
-  if (!data) return null
+  if (!data) {
+    return (
+      <Card className="py-12">
+        <CardContent>
+          <div className="flex flex-col items-center gap-3 text-muted-foreground">
+            <FileSearch size={40} strokeWidth={1.5} />
+            <p className="text-sm">Digite um protocolo para consultar</p>
+          </div>
+        </CardContent>
+      </Card>
+    )
+  }
 
   return (
-    <Card className="animate-in fade-in duration-300">
+    <Card>
       <CardHeader>
         <CardTitle className="text-lg">Resultado da Consulta</CardTitle>
       </CardHeader>
@@ -97,12 +94,14 @@ export default function ResultadoCard({ data, erro }: ResultadoCardProps) {
 
         <div className="border-t border-border my-2" />
 
-        <div className="flex items-center gap-2 py-2">
+        <div className="flex items-center gap-2 pb-1">
           <Fingerprint size={16} className="text-muted-foreground" />
           <span className="text-xs text-muted-foreground uppercase tracking-wide">Indicadores</span>
         </div>
-        <FieldRow label="Consulta Biográfica" value={String(data.indConsBiografica)} />
-        <FieldRow label="Consulta Biométrica" value={String(data.indConsBiometrica)} />
+        <div className="grid grid-cols-2 gap-2">
+          <IndicatorBadge label="Consulta Biográfica" value={data.indConsBiografica} />
+          <IndicatorBadge label="Consulta Biométrica" value={data.indConsBiometrica} />
+        </div>
       </CardContent>
     </Card>
   )

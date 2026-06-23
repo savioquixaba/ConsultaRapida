@@ -2,6 +2,7 @@ import { useState } from "react"
 import { Search } from "lucide-react"
 import ConsultaForm from "./components/ConsultaForm"
 import ResultadoCard from "./components/ResultadoCard"
+import SkeletonCard from "./components/SkeletonCard"
 import ThemeToggle from "./components/ThemeToggle"
 
 type ResultadoData = {
@@ -56,7 +57,7 @@ export default function App() {
           </div>
 
           <ConsultaForm onConsultar={handleConsultar} loading={loading} />
-          <ResultadoCard data={data} erro={erro} />
+          {loading ? <SkeletonCard /> : <ResultadoCard data={data} erro={erro} />}
         </div>
 
         <footer className="fixed bottom-0 w-full text-center py-4 text-xs text-muted-foreground bg-background/50 backdrop-blur-sm border-t border-border">
