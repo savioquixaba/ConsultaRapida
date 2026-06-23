@@ -38,6 +38,23 @@ function CopyButton({ value }: { value: string }) {
   )
 }
 
+type FieldProps = {
+  label: string
+  value: string
+}
+
+function FieldRow({ label, value }: FieldProps) {
+  return (
+    <div className="border-b pb-3 last:border-0">
+      <span className="text-xs text-muted-foreground uppercase tracking-wide">{label}</span>
+      <div className="flex items-start gap-2 mt-1">
+        <span className="font-medium break-all leading-relaxed flex-1 min-w-0">{value}</span>
+        <CopyButton value={value} />
+      </div>
+    </div>
+  )
+}
+
 export default function ResultadoCard({ data, erro }: ResultadoCardProps) {
   if (erro) {
     return (
@@ -46,7 +63,7 @@ export default function ResultadoCard({ data, erro }: ResultadoCardProps) {
           <CardTitle>Erro</CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-destructive">{erro}</p>
+          <p className="text-destructive whitespace-pre-wrap break-all">{erro}</p>
         </CardContent>
       </Card>
     )
@@ -54,30 +71,16 @@ export default function ResultadoCard({ data, erro }: ResultadoCardProps) {
 
   if (!data) return null
 
-  const fields = [
-    { label: "Protocolo", value: data.protocolo },
-    { label: "CPF", value: data.nrCpf },
-    { label: "Pendência RFB", value: data.pendenciaRFB ? "Sim" : "Não" },
-    { label: "Descrição Pendência", value: data.descricaoPendencia ?? "—" },
-  ]
-
   return (
     <Card>
       <CardHeader>
         <CardTitle>Resultado da Consulta</CardTitle>
       </CardHeader>
-      <CardContent>
-        <div className="grid gap-3">
-          {fields.map((field) => (
-            <div key={field.label} className="flex items-center justify-between border-b pb-2 last:border-0">
-              <span className="text-muted-foreground">{field.label}</span>
-              <span className="font-medium flex items-center">
-                {field.value}
-                <CopyButton value={field.value} />
-              </span>
-            </div>
-          ))}
-        </div>
+      <CardContent className="space-y-2">
+        <FieldRow label="Protocolo" value={data.protocolo} />
+        <FieldRow label="CPF" value={data.nrCpf} />
+        <FieldRow label="Pendência RFB" value={data.pendenciaRFB ? "Sim" : "Não"} />
+        <FieldRow label="Descrição Pendência" value={data.descricaoPendencia ?? "—"} />
       </CardContent>
     </Card>
   )
