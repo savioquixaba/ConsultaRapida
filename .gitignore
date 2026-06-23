@@ -1,0 +1,28 @@
+# Environment variables
+.env
+backend/.env
+frontend/.env
+
+# Java / Maven
+backend/target/
+*.class
+*.jar
+*.war
+!*.mvn/wrapper/maven-wrapper.jar
+
+# Node / React
+frontend/node_modules/
+frontend/dist/
+frontend/build/
+
+# IDE
+.idea/
+*.iml
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
