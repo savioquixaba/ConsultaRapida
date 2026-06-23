@@ -1,6 +1,7 @@
 package com.consultarapida.exception;
 
 import feign.FeignException;
+import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -10,6 +11,13 @@ import java.util.Map;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<Map<String, Object>> handleValidationError(ConstraintViolationException ex) {
+        return ResponseEntity.badRequest().body(Map.of(
+                "erro", "Protocolo inválido"
+        ));
+    }
 
     @ExceptionHandler(FeignException.class)
     public ResponseEntity<Map<String, Object>> handleFeignError(FeignException ex) {

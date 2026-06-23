@@ -52,7 +52,10 @@ public class ConsultaService {
                 indConsBiometrica = cinItem.getIndConsBiometrica();
             }
         } catch (Exception e) {
-            log.warn("API 2 indisponível para o CPF {}: {}", cpf, e.getMessage());
+            String cpfMasked = cpf != null && cpf.length() >= 3
+                    ? "***" + cpf.substring(cpf.length() - 3)
+                    : "***";
+            log.warn("API 2 indisponível para o CPF {}: {}", cpfMasked, e.getMessage());
         }
 
         return new ConsultaResponse(

@@ -78,7 +78,7 @@ Abrir `http://localhost:5173`
 ```json
 {
   "protocolo": "123456",
-  "nrCpf": "12345678900",
+  "nrCpf": "123.456.789-00",
   "pendenciaRFB": false,
   "descricaoPendencia": null,
   "indConsBiografica": 2,
