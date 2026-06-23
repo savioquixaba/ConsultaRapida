@@ -7,6 +7,8 @@ type ResultadoData = {
   nrCpf: string
   pendenciaRFB: boolean
   descricaoPendencia: string | null
+  indConsBiografica: number
+  indConsBiometrica: number
 }
 
 type ResultadoCardProps = {
@@ -81,6 +83,8 @@ export default function ResultadoCard({ data, erro }: ResultadoCardProps) {
         <FieldRow label="CPF" value={data.nrCpf} />
         <FieldRow label="Pendência RFB" value={data.pendenciaRFB ? "Sim" : "Não"} />
         <FieldRow label="Descrição Pendência" value={data.descricaoPendencia ?? "—"} />
+        <FieldRow label="Ind. Consulta Biográfica" value={String(data.indConsBiografica)} />
+        <FieldRow label="Ind. Consulta Biométrica" value={String(data.indConsBiometrica)} />
       </CardContent>
     </Card>
   )

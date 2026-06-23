@@ -6,6 +6,9 @@ api:
     base-url: ${API1_URL}
     username: ${API1_USERNAME}
     password: ${API1_PASSWORD}
+  consulta2:
+    url: ${API2_URL}
+    cpf-usuario: ${API2_CPF_USUARIO}
 
 spring:
   cloud:

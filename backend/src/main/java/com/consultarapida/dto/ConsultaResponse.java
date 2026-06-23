@@ -6,14 +6,19 @@ public class ConsultaResponse {
     private String nrCpf;
     private boolean pendenciaRFB;
     private String descricaoPendencia;
+    private int indConsBiografica;
+    private int indConsBiometrica;
 
     public ConsultaResponse() {}
 
-    public ConsultaResponse(String protocolo, String nrCpf, boolean pendenciaRFB, String descricaoPendencia) {
+    public ConsultaResponse(String protocolo, String nrCpf, boolean pendenciaRFB, String descricaoPendencia,
+                            int indConsBiografica, int indConsBiometrica) {
         this.protocolo = protocolo;
         this.nrCpf = nrCpf;
         this.pendenciaRFB = pendenciaRFB;
         this.descricaoPendencia = descricaoPendencia;
+        this.indConsBiografica = indConsBiografica;
+        this.indConsBiometrica = indConsBiometrica;
     }
 
     public String getProtocolo() {
@@ -46,5 +51,21 @@ public class ConsultaResponse {
 
     public void setDescricaoPendencia(String descricaoPendencia) {
         this.descricaoPendencia = descricaoPendencia;
+    }
+
+    public int getIndConsBiografica() {
+        return indConsBiografica;
+    }
+
+    public void setIndConsBiografica(int indConsBiografica) {
+        this.indConsBiografica = indConsBiografica;
+    }
+
+    public int getIndConsBiometrica() {
+        return indConsBiometrica;
+    }
+
+    public void setIndConsBiometrica(int indConsBiometrica) {
+        this.indConsBiometrica = indConsBiometrica;
     }
 }
