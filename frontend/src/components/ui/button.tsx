@@ -14,7 +14,7 @@ const Button = React.forwardRef<
         "inline-flex items-center justify-center rounded-lg font-medium transition-all duration-200",
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
         "disabled:pointer-events-none disabled:opacity-50",
-        variant === "default" && "bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm",
+        variant === "default" && "bg-primary text-primary-foreground hover:bg-primary/90 shadow-[0_6px_20px_rgba(0,128,255,0.35)] border border-white/10",
         variant === "outline" && "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
         size === "default" && "h-10 px-4 py-2",
         size === "sm" && "h-9 px-3 text-sm",

@@ -47,7 +47,7 @@ function IndicatorBadge({ label, value }: { label: string; value: number }) {
 export default function ResultadoCard({ data, erro }: ResultadoCardProps) {
   if (erro) {
     return (
-      <Card className="border-destructive/30 bg-destructive/5">
+      <Card className="border-destructive/30 bg-destructive/5 animate-shake">
         <CardHeader>
           <div className="flex items-center gap-2">
             <XCircle size={20} className="text-destructive" />
@@ -75,7 +75,7 @@ export default function ResultadoCard({ data, erro }: ResultadoCardProps) {
   }
 
   return (
-    <Card>
+    <Card className="animate-rise">
       <CardHeader>
         <CardTitle className="text-lg">Resultado da Consulta</CardTitle>
       </CardHeader>

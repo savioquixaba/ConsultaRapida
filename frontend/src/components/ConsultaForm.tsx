@@ -20,12 +20,19 @@ export default function ConsultaForm({ onConsultar, loading }: ConsultaFormProps
 
   return (
     <form onSubmit={handleSubmit} className="flex gap-2">
-      <Input
-        placeholder="Digite o número do protocolo"
-        value={protocolo}
-        onChange={(e) => setProtocolo(e.target.value)}
-        disabled={loading}
-      />
+      <div className="relative flex-1">
+        <Search
+          size={17}
+          className="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none"
+        />
+        <Input
+          placeholder="Digite o número do protocolo"
+          value={protocolo}
+          onChange={(e) => setProtocolo(e.target.value)}
+          disabled={loading}
+          className="pl-10"
+        />
+      </div>
       <Button type="submit" disabled={loading || !protocolo.trim()} size="lg">
         {loading ? (
           <Loader2 size={18} className="animate-spin" />
