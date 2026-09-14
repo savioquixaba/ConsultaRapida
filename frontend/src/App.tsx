@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Search, Heart, Globe } from "lucide-react"
+import { Search, Heart, Globe, ShieldCheck } from "lucide-react"
 import ConsultaForm from "./components/ConsultaForm"
 import ResultadoCard from "./components/ResultadoCard"
 import SkeletonCard from "./components/SkeletonCard"
@@ -14,7 +14,7 @@ type ResultadoData = {
   indConsBiometrica: number
 }
 
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8080"
+const API_URL = import.meta.env.VITE_API_URL || ""
 
 export default function App() {
   const [data, setData] = useState<ResultadoData | null>(null)
@@ -27,7 +27,13 @@ export default function App() {
     setErro(null)
 
     try {
-      const res = await fetch(`${API_URL}/api/consultas/${protocolo}`)
+      const res = await fetch(`${API_URL}/api/consultas/${protocolo}`, {
+        headers: { "ngrok-skip-browser-warning": "true" },
+      })
+      if (res.status === 401 || res.status === 403) {
+        window.location.href = "/login"
+        return
+      }
       if (!res.ok) {
         const err = await res.json().catch(() => null)
         throw new Error(err?.erro || `Erro ${res.status}`)
@@ -46,14 +52,20 @@ export default function App() {
       <ThemeToggle />
       <div className="min-h-screen flex flex-col items-center p-4 pt-12 md:pt-24">
         <div className="w-full max-w-lg space-y-8 pb-16">
-          <div className="text-center space-y-2">
-            <div className="inline-flex items-center justify-center size-12 rounded-xl bg-primary/10 mb-2">
-              <Search size={24} className="text-primary" />
+          <div className="text-center space-y-2 animate-rise">
+            <div className="inline-flex items-center justify-center size-14 rounded-2xl bg-gradient-to-br from-primary/25 to-primary/5 border border-primary/30 shadow-[0_0_28px_rgba(0,128,255,0.35)] mb-2">
+              <Search size={26} className="text-primary" />
             </div>
             <h1 className="text-3xl font-bold tracking-tight">ConsultaRapida</h1>
             <p className="text-sm text-muted-foreground">
               Consulte protocolos e obtenha dados consolidados
             </p>
+            <div>
+              <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-green-500 border border-green-500/30 bg-green-500/10 rounded-full px-2.5 py-1">
+                <ShieldCheck size={12} />
+                Ambiente seguro
+              </span>
+            </div>
           </div>
 
           <ConsultaForm onConsultar={handleConsultar} loading={loading} />

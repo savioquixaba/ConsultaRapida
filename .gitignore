@@ -18,6 +18,11 @@ frontend/node_modules/
 frontend/dist/
 frontend/build/
 
+# Frontend build copiado para o backend (gerado via npm run build)
+# Exceção: login.html é código-fonte da tela de login customizada
+backend/src/main/resources/static/*
+!backend/src/main/resources/static/login.html
+
 # IDE
 .idea/
 *.iml
