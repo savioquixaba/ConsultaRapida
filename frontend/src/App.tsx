@@ -4,6 +4,7 @@ import ConsultaForm from "./components/ConsultaForm"
 import ResultadoCard from "./components/ResultadoCard"
 import SkeletonCard from "./components/SkeletonCard"
 import ThemeToggle from "./components/ThemeToggle"
+import LoginModal from "./components/LoginModal"
 
 type ResultadoData = {
   protocolo: string
@@ -20,6 +21,13 @@ export default function App() {
   const [data, setData] = useState<ResultadoData | null>(null)
   const [erro, setErro] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
+  const [loginOpen, setLoginOpen] = useState(false)
+  const [pendingProtocolo, setPendingProtocolo] = useState<string | null>(null)
+
+  function pedirLogin(protocolo: string) {
+    setPendingProtocolo(protocolo)
+    setLoginOpen(true)
+  }
 
   async function handleConsultar(protocolo: string) {
     setLoading(true)
@@ -31,7 +39,12 @@ export default function App() {
         headers: { "ngrok-skip-browser-warning": "true" },
       })
       if (res.status === 401 || res.status === 403) {
-        window.location.href = "/login"
+        pedirLogin(protocolo)
+        return
+      }
+      const contentType = res.headers.get("content-type") || ""
+      if (!contentType.includes("application/json")) {
+        pedirLogin(protocolo)
         return
       }
       if (!res.ok) {
@@ -44,6 +57,15 @@ export default function App() {
       setErro(e instanceof Error ? e.message : "Erro inesperado")
     } finally {
       setLoading(false)
+    }
+  }
+
+  function handleRelogado() {
+    setLoginOpen(false)
+    if (pendingProtocolo) {
+      const protocolo = pendingProtocolo
+      setPendingProtocolo(null)
+      handleConsultar(protocolo)
     }
   }
 
@@ -70,6 +92,11 @@ export default function App() {
 
           <ConsultaForm onConsultar={handleConsultar} loading={loading} />
           {loading ? <SkeletonCard /> : <ResultadoCard data={data} erro={erro} />}
+          <LoginModal
+            open={loginOpen}
+            onClose={() => setLoginOpen(false)}
+            onSuccess={handleRelogado}
+          />
         </div>
 
         <footer className="fixed bottom-0 w-full text-center py-3 text-xs text-muted-foreground bg-background/50 backdrop-blur-sm border-t border-border">
